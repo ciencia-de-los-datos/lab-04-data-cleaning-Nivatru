@@ -11,7 +11,7 @@ from datetime import datetime
 
 def fecha(x):
     y = x.split('/')
-    if len(y[2]) == 2:
+    if len(y[2]) == 2 or len(y[2]) == 1:
         return pd.to_datetime(x, format='%Y/%m/%d').strftime('%Y-%m-%d')
     return pd.to_datetime(x, dayfirst=True).strftime('%Y-%m-%d')
 
@@ -19,6 +19,7 @@ def clean_data():
 
     df = pd.read_csv("solicitudes_credito.csv", sep=";")
     df.drop(df.columns[0], axis = 1, inplace=True)
+    df = df.copy()
     df.dropna(axis=0, inplace=True)
     df["sexo"] = df["sexo"].str.lower()
     df["tipo_de_emprendimiento"] = df["tipo_de_emprendimiento"].str.lower()
